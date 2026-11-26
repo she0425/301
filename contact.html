@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacts App</title>
+  <style>
+    /* Smartphone Viewport Simulation & Styling */
+    body {
+      background-color: #e5e5e5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .phone-container {
+      width: 320px;
+      height: 560px;
+      background-color: #f2f2f7;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+    h2 { margin: 0 0 15px 0; text-align: center; color: #000; }
+    input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .btn-add { background-color: #007aff; color: white; }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex-grow: 1;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 8px;
+    }
+    .contact-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .btn-delete {
+      background-color: #ff3b30;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      width: auto;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="phone-container">
+  <h2>Contacts</h2>
+  
+  <!-- Add Contact Inputs -->
+  <input type="text" id="nameInput" placeholder="Name">
+  <input type="text" id="phoneInput" placeholder="Phone Number">
+  <button class="btn-add" onclick="addContact()">Add Contact</button>
+
+  <!-- Search Bar -->
+  <input type="text" id="searchInput" placeholder="Search contacts..." onkeyup="searchContacts()">
+
+  <!-- Display List -->
+  <ul class="contact-list" id="contactList"></ul>
+</div>
+
+<script>
+  // In-memory contact data array
+  let contacts = [
+    { name: "Alice Smith", phone: "0917-123-4567" },
+    { name: "Bob Johnson", phone: "0918-987-6543" }
+  ];
+
+  // Renders contacts list in DOM
+  function renderContacts(data = contacts) {
+    const listElement = document.getElementById("contactList");
+    listElement.innerHTML = "";
+
+    data.forEach((contact, index) => {
+      const li = document.createElement("li");
+      li.className = "contact-item";
+      li.innerHTML = `
+        <div>
+          <strong>${contact.name}</strong><br>
+          <small style="color: #666;">${contact.phone}</small>
+        </div>
+        <button class="btn-delete" onclick="deleteContact(${index})">Delete</button>
+      `;
+      listElement.appendChild(li);
+    });
+  }
+
+  // Adds new contact after validation
+  function addContact() {
+    const name = document.getElementById("nameInput").value.trim();
+    const phone = document.getElementById("phoneInput").value.trim();
+
+    if (!name || !phone) {
+      alert("Please fill in both Name and Phone fields.");
+      return;
+    }
+
+    contacts.push({ name, phone });
+    document.getElementById("nameInput").value = "";
+    document.getElementById("phoneInput").value = "";
+    renderContacts();
+  }
+
+  // Removes contact by index
+  function deleteContact(index) {
+    contacts.splice(index, 1);
+    renderContacts();
+  }
+
+  // Filters items dynamically based on search query
+  function searchContacts() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const filtered = contacts.filter(c => 
+      c.name.toLowerCase().includes(query) || c.phone.toLowerCase().includes(query)
+    );
+    renderContacts(filtered);
+  }
+
+  // Initial render on page load
+  renderContacts();
+</script>
+
+</body>
+</html>
