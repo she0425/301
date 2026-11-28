@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Settings · Contactly</title>
+
+  <!-- ======================================================================
+       STYLESHEETS (Global design system + responsive breakpoints)
+       ====================================================================== -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body class="app-body" data-page="settings">
+  <div class="app-layout">
+
+    <!-- ====================================================================
+         1. SIDEBAR NAVIGATION
+         Switches between workspace views, preferences, and session controls.
+         ==================================================================== -->
+    <aside class="sidebar" id="sidebar" aria-label="Primary sidebar">
+      <!-- Brand logo & home link -->
+      <a class="brand" href="dashboard.html">
+        <span class="brand-mark">C</span> Contactly
+      </a>
+
+      <!-- Workspace navigation links -->
+      <div class="side-label">WORKSPACE</div>
+      <nav aria-label="Workspace navigation">
+        <a href="dashboard.html" data-nav="dashboard">▦ <span>Dashboard</span></a>
+        <a href="contacts.html" data-nav="contacts">♧ <span>All contacts</span></a>
+        <a href="favorites.html" data-nav="favorites">☆ <span>Favorites</span></a>
+        <a href="categories.html" data-nav="categories">▤ <span>Categories</span></a>
+        <a href="contacts.html?recent=1" data-nav="recent">◷ <span>Recently added</span></a>
+      </nav>
+
+      <!-- Account & preferences navigation -->
+      <div class="side-label">PREFERENCES</div>
+      <nav aria-label="Preferences navigation">
+        <a href="settings.html" data-nav="settings">⚙ <span>Settings</span></a>
+      </nav>
+
+      <!-- Active user summary & sign-out action -->
+      <div class="sidebar-bottom">
+        <div class="mini-user" id="sideUser"></div>
+        <button type="button" class="nav-logout" id="logoutBtn">↪ <span>Log out</span></button>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         2. MAIN CONTENT AREA
+         Sticky topbar header, profile/password forms, and account deletion.
+         ==================================================================== -->
+    <main class="main-area" aria-label="Account settings workspace">
+
+      <!-- Sticky top header bar -->
+      <header class="topbar">
+        <button type="button" class="mobile-menu" id="menuBtn" aria-label="Toggle menu">☰</button>
+        <div>
+          <span class="muted small">CONTACT MANAGEMENT</span>
+          <strong>Settings</strong>
+        </div>
+        <div class="top-user" id="topUser"></div>
+      </header>
+
+      <!-- Page content container populated by settings.js -->
+      <section class="page-content" id="pageContent">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">PREFERENCES</p>
+            <h1>Account settings</h1>
+            <p class="muted">Manage your profile and sign-in details.</p>
+          </div>
+        </div>
+
+        <!-- Settings card: profile fields, password update, and danger zone -->
+        <section class="panel settings-panel" aria-label="Account settings forms">
+
+          <!-- Section A: Profile information form -->
+          <h2>Profile information</h2>
+          <form id="profileForm" class="form-grid">
+            <label>
+              Full name
+              <input name="fullName" required autocomplete="name" placeholder="Your full name">
+            </label>
+            <label>
+              Username
+              <input name="username" required minlength="3" autocomplete="username" placeholder="Choose a username">
+            </label>
+            <label>
+              Email address
+              <input name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+            </label>
+            <label>
+              Profile picture URL (optional)
+              <input name="avatar" type="url" placeholder="https://…">
+            </label>
+            <div class="wide">
+              <label>
+                Or upload profile picture (PNG, JPG, GIF, WEBP · max 1.5 MB)
+                <input
+                  type="file"
+                  id="avatarFile"
+                  accept="image/png,image/jpeg,image/gif,image/webp"
+                >
+              </label>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:10px;">
+                <div class="avatar" id="avatarPreview" aria-label="Avatar preview"></div>
+                <button type="button" class="btn secondary" id="clearAvatarBtn">Remove photo</button>
+              </div>
+            </div>
+            <button class="btn primary" type="submit">Save profile</button>
+          </form>
+
+          <hr>
+
+          <!-- Section B: Password change form -->
+          <h2>Change password</h2>
+          <form id="passwordForm" class="form-grid">
+            <label>
+              Current password
+              <input name="currentPassword" type="password" required autocomplete="current-password">
+            </label>
+            <label>
+              New password
+              <input name="newPassword" type="password" minlength="8" required autocomplete="new-password">
+            </label>
+            <label>
+              Confirm new password
+              <input name="confirmPassword" type="password" required autocomplete="new-password">
+            </label>
+            <button class="btn primary" type="submit">Update password</button>
+          </form>
+
+          <hr>
+
+          <!-- Section C: Destructive account removal -->
+          <div class="danger-zone">
+            <div>
+              <h2>Delete account</h2>
+              <p class="muted">Permanently deletes this account and its contacts from this browser.</p>
+            </div>
+            <button type="button" class="btn danger" id="deleteAccountBtn">Delete account</button>
+          </div>
+
+        </section>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ======================================================================
+       3. OVERLAYS & SCRIPT ENTRY POINTS
+       Modal container, toast notifications, and ordered module scripts.
+       ====================================================================== -->
+  <div id="modalRoot"></div>
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+
+  <!-- Load sql.js + SQLite storage first, shared app shell second, page logic third -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

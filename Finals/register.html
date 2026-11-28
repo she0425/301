@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Create account · Contactly</title>
+
+  <!-- ======================================================================
+       STYLESHEETS (Global design system + authentication layout)
+       ====================================================================== -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-body" data-page="register">
+
+  <!-- ====================================================================
+       1. AUTHENTICATION CARD & NAVIGATION
+       Account registration form with strength hint, terms check, and login link.
+       ==================================================================== -->
+  <main class="auth-card" aria-label="Create account form">
+    <!-- Brand logo & home link -->
+    <a class="brand" href="index.html">
+      <span class="brand-mark">C</span> Contactly
+    </a>
+
+    <!-- Screen heading & subtitle -->
+    <p class="eyebrow">GET STARTED</p>
+    <h1>Create your account</h1>
+    <p class="muted">A simpler way to manage your contacts.</p>
+
+    <!-- Primary registration form handled by js/auth.js -->
+    <form id="registerForm">
+      <!-- Profile identity fields -->
+      <label>
+        Full name
+        <input
+          name="fullName"
+          required
+          maxlength="80"
+          autocomplete="name"
+          placeholder="Your full name"
+        >
+      </label>
+
+      <label>
+        Email address
+        <input
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+      </label>
+
+      <label>
+        Username
+        <input
+          name="username"
+          required
+          minlength="3"
+          maxlength="30"
+          autocomplete="username"
+          placeholder="Choose a username"
+        >
+      </label>
+
+      <!-- Password field with show/hide toggle & strength helper text -->
+      <label>
+        Password
+        <div class="password-wrap">
+          <input
+            name="password"
+            type="password"
+            required
+            minlength="8"
+            autocomplete="new-password"
+            placeholder="At least 8 characters"
+          >
+          <button type="button" class="toggle-password" aria-label="Toggle password visibility">Show</button>
+        </div>
+        <span class="strength" id="strengthText">Use 8+ characters with letters and numbers.</span>
+      </label>
+
+      <label>
+        Confirm password
+        <input
+          name="confirmPassword"
+          type="password"
+          required
+          autocomplete="new-password"
+          placeholder="Re-enter your password"
+        >
+      </label>
+
+      <!-- Terms consent & form submission -->
+      <label class="check terms">
+        <input type="checkbox" name="terms" required> I agree to the local demo terms.
+      </label>
+
+      <button class="btn primary full" type="submit">Create account</button>
+      <p class="form-message" id="formMessage" role="status"></p>
+    </form>
+
+    <!-- Footer navigation back to sign in & local storage security note -->
+    <p class="auth-foot">
+      Already registered? <a href="index.html">Sign in</a>
+    </p>
+    <p class="security-note">Passwords are stored locally and are not suitable for production use.</p>
+  </main>
+
+  <!-- ======================================================================
+       2. TOAST CONTAINER & SCRIPT ENTRY POINTS
+       Notifications and ordered auth/storage modules.
+       ====================================================================== -->
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+
+  <!-- Load sql.js + SQLite storage first, authentication handler second -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

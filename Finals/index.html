@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sign in · Contactly</title>
+
+  <!-- ======================================================================
+       STYLESHEETS (Global design system + authentication layout)
+       ====================================================================== -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-body" data-page="login">
+
+  <!-- ====================================================================
+       1. AUTHENTICATION CARD & NAVIGATION
+       Sign-in form with password toggle, session options, and auth links.
+       ==================================================================== -->
+  <main class="auth-card" aria-label="Sign in form">
+    <!-- Brand logo & home link -->
+    <a class="brand" href="index.html">
+      <span class="brand-mark">C</span> Contactly
+    </a>
+
+    <!-- Screen heading & subtitle -->
+    <p class="eyebrow">WELCOME BACK</p>
+    <h1>Sign in to your account</h1>
+    <p class="muted">Keep your important connections organized.</p>
+
+    <!-- Primary login form handled by js/auth.js -->
+    <form id="loginForm">
+      <!-- Account identifier (email or username) -->
+      <label>
+        Email or username
+        <input name="identity" required autocomplete="username" placeholder="you@example.com">
+      </label>
+
+      <!-- Password field with show/hide toggle button -->
+      <label>
+        Password
+        <div class="password-wrap">
+          <input name="password" type="password" required autocomplete="current-password" placeholder="Enter your password">
+          <button type="button" class="toggle-password" aria-label="Show password">Show</button>
+        </div>
+      </label>
+
+      <!-- Secondary form controls: session persistence & password recovery link -->
+      <div class="form-row">
+        <label class="check">
+          <input type="checkbox" name="remember"> Remember me
+        </label>
+        <a href="forgot-password.html">Forgot password?</a>
+      </div>
+
+      <!-- Submit button & live status/error feedback -->
+      <button class="btn primary full" type="submit">Sign in</button>
+      <p class="form-message" id="formMessage" role="status"></p>
+    </form>
+
+    <!-- Footer navigation to registration & local storage notice -->
+    <p class="auth-foot">
+      New to Contactly? <a href="register.html">Create an account</a>
+    </p>
+    <p class="security-note">Local demo only · Data is stored in this browser.</p>
+  </main>
+
+  <!-- ======================================================================
+       2. TOAST CONTAINER & SCRIPT ENTRY POINTS
+       Notifications and ordered auth/storage modules.
+       ====================================================================== -->
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+
+  <!-- Load sql.js + SQLite storage first, authentication handler second -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
