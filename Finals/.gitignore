@@ -1,0 +1,5 @@
+﻿node_modules/
+server/contactly.db
+server/contactly.db-journal
+server/uploads/*
+!server/uploads/.gitkeep

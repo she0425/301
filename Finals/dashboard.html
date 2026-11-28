@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard · Contactly</title>
+
+  <!-- ======================================================================
+       STYLESHEETS (Global design system + responsive breakpoints)
+       ====================================================================== -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body class="app-body" data-page="dashboard">
+  <div class="app-layout">
+
+    <!-- ====================================================================
+         1. SIDEBAR NAVIGATION
+         Switches between workspace views, preferences, and session controls.
+         ==================================================================== -->
+    <aside class="sidebar" id="sidebar" aria-label="Primary sidebar">
+      <!-- Brand logo & home link -->
+      <a class="brand" href="dashboard.html">
+        <span class="brand-mark">C</span> Contactly
+      </a>
+
+      <!-- Workspace navigation links -->
+      <div class="side-label">WORKSPACE</div>
+      <nav aria-label="Workspace navigation">
+        <a href="dashboard.html" data-nav="dashboard">▦ <span>Dashboard</span></a>
+        <a href="contacts.html" data-nav="contacts">♧ <span>All contacts</span></a>
+        <a href="favorites.html" data-nav="favorites">☆ <span>Favorites</span></a>
+        <a href="categories.html" data-nav="categories">▤ <span>Categories</span></a>
+        <a href="contacts.html?recent=1" data-nav="recent">◷ <span>Recently added</span></a>
+      </nav>
+
+      <!-- Account & preferences navigation -->
+      <div class="side-label">PREFERENCES</div>
+      <nav aria-label="Preferences navigation">
+        <a href="settings.html" data-nav="settings">⚙ <span>Settings</span></a>
+      </nav>
+
+      <!-- Active user summary & sign-out action -->
+      <div class="sidebar-bottom">
+        <div class="mini-user" id="sideUser"></div>
+        <button type="button" class="nav-logout" id="logoutBtn">↪ <span>Log out</span></button>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         2. MAIN CONTENT AREA
+         Sticky topbar header, key statistics metrics, and recent activity panel.
+         ==================================================================== -->
+    <main class="main-area">
+
+      <!-- Sticky top header bar -->
+      <header class="topbar">
+        <button type="button" class="mobile-menu" id="menuBtn" aria-label="Toggle menu">☰</button>
+        <div>
+          <span class="muted small">CONTACT MANAGEMENT</span>
+          <strong>Dashboard</strong>
+        </div>
+        <div class="top-user" id="topUser"></div>
+      </header>
+
+      <!-- Page content container populated by dashboard.js -->
+      <section class="page-content" id="pageContent">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">OVERVIEW</p>
+            <h1>Your contacts, in one place.</h1>
+            <p class="muted">A clear view of the people who matter to you.</p>
+          </div>
+          <!-- Quick action shortcut to contacts page with add modal trigger -->
+          <a class="btn primary" href="contacts.html?action=add">＋ Add contact</a>
+        </div>
+
+        <!-- Metric counter cards populated dynamically via js/dashboard.js -->
+        <div class="stats-grid" aria-label="Metrics overview">
+          <article class="stat-card">
+            <span class="stat-icon">♧</span>
+            <span class="muted">Total contacts</span>
+            <strong id="totalCount">0</strong>
+            <small>Saved in your address book</small>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-icon gold">☆</span>
+            <span class="muted">Favorites</span>
+            <strong id="favoriteCount">0</strong>
+            <small>Your starred connections</small>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-icon green">◷</span>
+            <span class="muted">Added this week</span>
+            <strong id="recentCount">0</strong>
+            <small>Recently added contacts</small>
+          </article>
+        </div>
+
+        <!-- Recent contact activity panel -->
+        <section class="panel" aria-label="Recent activity">
+          <div class="panel-heading">
+            <div>
+              <h2>Recently added</h2>
+              <p class="muted">Your latest connections</p>
+            </div>
+            <a href="contacts.html">View all →</a>
+          </div>
+
+          <!-- Contact list items rendered dynamically via js/dashboard.js -->
+          <div id="recentContacts" class="contact-list"></div>
+        </section>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ======================================================================
+       3. OVERLAYS & SCRIPT ENTRY POINTS
+       Modal container, toast notifications, and ordered module scripts.
+       ====================================================================== -->
+  <div id="modalRoot"></div>
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+
+  <!-- Load sql.js + SQLite storage first, shared app shell second, page logic third -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
